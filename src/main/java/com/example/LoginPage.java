@@ -1,24 +1,30 @@
 package com.example;
 
+import static com.codeborne.selenide.Selectors.byXpath;
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.open;
+
 public class LoginPage {
-    private final String xLoginButton = "//*[starts-with(@id, 'tabpanel-login-')]/form/div[4]/input";
-    private final String xRegisterButton = "//*[starts-with(@id, 'tabpanel-login-')]/form/div[4]/div[2]/a";
-    private final String xLoginField = "//*[@id=\"field_email\"]";
-    private final String xPasswordField = "//*[@id=\"field_password\"]";
+    private final String xLoginButton = "//div[@class='login-form-actions']/input[@type='submit']";
+    private final String xLoginField = "//*[@id='field_email']";
+    private final String xPasswordField = "//*[@id='field_password']";
+
+    public void login(String login, String password) {
+        open("https://ok.ru/");
+        $(byXpath(xLoginField)).val(login);
+        $(byXpath(xPasswordField)).val(password);
+        $(byXpath(xLoginButton)).click();
+    }
 
     public String getXLoginButton() {
         return xLoginButton;
     }
 
-    public String getXRegisterButton() {
-        return xRegisterButton;
-    }
-
-    public String getxPasswordField() {
+    public String getXPasswordField() {
         return xPasswordField;
     }
 
-    public String getxLoginField() {
+    public String getXLoginField() {
         return xLoginField;
     }
 }

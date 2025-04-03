@@ -20,9 +20,15 @@
 
   <dependencies>
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.13.1</version>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <version>5.10.0</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-engine</artifactId>
+      <version>5.10.0</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -34,11 +40,6 @@
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
       <version>1.4.12</version>
-    </dependency>
-    <dependency>
-      <groupId>io.github.cdimascio</groupId>
-      <artifactId>dotenv-java</artifactId>
-      <version>3.0.0</version>
     </dependency>
   </dependencies>
 
@@ -55,7 +56,7 @@
         </plugin>
         <plugin>
           <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.11.0</version> <!-- Updated for Java 21 support -->
+          <version>3.11.0</version>
         </plugin>
         <plugin>
           <artifactId>maven-surefire-plugin</artifactId>
