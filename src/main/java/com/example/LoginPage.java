@@ -1,30 +1,25 @@
 package com.example;
 
+import com.codeborne.selenide.SelenideElement;
+
+import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byXpath;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.open;
 
 public class LoginPage {
-    private final String xLoginButton = "//div[@class='login-form-actions']/input[@type='submit']";
-    private final String xLoginField = "//*[@id='field_email']";
-    private final String xPasswordField = "//*[@id='field_password']";
+    private final SelenideElement loginField = $(byXpath("//*[@id='field_email']"));
+    private final SelenideElement passwordField = $(byXpath("//*[@id='field_password']"));
+    private final SelenideElement loginButton = $(byXpath("//div[@class='login-form-actions']/input[@type='submit']"));
+    private final SelenideElement errorForm = $(byXpath("//div[contains(@class, 'form_i__error')]"));
 
     public void login(String login, String password) {
         open("https://ok.ru/");
-        $(byXpath(xLoginField)).val(login);
-        $(byXpath(xPasswordField)).val(password);
-        $(byXpath(xLoginButton)).click();
+        loginField.val(login);
+        passwordField.val(password);
+        loginButton.click();
     }
 
-    public String getXLoginButton() {
-        return xLoginButton;
-    }
-
-    public String getXPasswordField() {
-        return xPasswordField;
-    }
-
-    public String getXLoginField() {
-        return xLoginField;
+    public void errorFormvisible() {
+        errorForm.shouldBe(visible);
     }
 }
