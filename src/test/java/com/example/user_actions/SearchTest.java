@@ -1,4 +1,4 @@
-package com.example.main_actions;
+package com.example.user_actions;
 
 import static com.codeborne.selenide.Selenide.open;
 import static com.codeborne.selenide.Selenide.sleep;
@@ -27,12 +27,13 @@ public class SearchTest extends BaseUserTest {
         public void openAndCloseSearch() {
             mainPage.clickSearchField();
             sleep(2000);
-            mainPage.dropdownVisible();
-            mainPage.collapseTheSearch();
+            mainPage
+                    .dropdownVisible()
+                    .collapseTheSearch();
         }
 
         @ParameterizedTest
-        @ValueSource(strings = {"обломки чувств", "ma meillure ennemie", "tardigrade song"})
+        @ValueSource(strings = { "обломки чувств", "ma meillure ennemie", "tardigrade song" })
         @DisplayName("Поиск названий песен")
         public void searchMusicTitle(String name) {
             mainPage.search(name);

@@ -1,4 +1,4 @@
-package com.example.main_actions;
+package com.example.user_actions;
 
 import com.example.*;
 import org.junit.jupiter.api.*;
@@ -24,14 +24,12 @@ public class FeedTest extends BaseUserTest {
 
     @Test
     @DisplayName("Переключение между моей лентой и рекомендациями")
-    public void switchBetweenMyFeedAndRecommendations() {
-        mainPage.shouldBeInMyFeed();
-
-        mainPage.switchToRecommendations();
-        mainPage.shouldBeInRecommendations();
-
-        mainPage.switchToMyFeed();
-        mainPage.shouldBeInMyFeed();
+    public void switchBetweenMyFeedAndRecommendations() { 
+        mainPage.shouldBeInMyFeed() // chain of invocations
+                .switchToRecommendations()
+                .shouldBeInRecommendations()
+                .switchToMyFeed()
+                .shouldBeInMyFeed();
     }
 
     @Test

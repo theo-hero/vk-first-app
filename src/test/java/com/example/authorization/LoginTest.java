@@ -3,42 +3,51 @@ package com.example.authorization;
 import com.example.BaseTest;
 import com.example.LoginPage;
 import com.example.MainPage;
+import com.example.values.AccountDetails;
 
 import static com.codeborne.selenide.Selenide.closeWebDriver;
+
+import java.util.stream.Stream;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.MethodSource;
 
 public class LoginTest extends BaseTest {
-    // зарегистрироваться
     private LoginPage loginPage = new LoginPage();
+
+    // entity driven data provider
+    static Stream<AccountDetails> validUsers() {
+        return Stream.of(
+                new AccountDetails("technopol71", "technopolisPassword", "technopol71", "technopol71"),
+                new AccountDetails("technopol43", "technopolisPassword", "technopol43", "technopol43"));
+    }
+
+    static Stream<AccountDetails> invalidUsers() {
+        return Stream.of(
+                new AccountDetails("technopol76", "techno", "", ""),
+                new AccountDetails("polis", "technopolisPassword", "", ""));
+    }
 
     @ParameterizedTest
     @Tag("smoke")
     @DisplayName("Вход с верными данными")
-    @CsvSource({
-            "technopol71, technopolisPassword, technopol71, technopol71",
-            "technopol43, technopolisPassword, technopol43, technopol43"
-    })
-    public void loginWithValidCredentials(String login, String password, String name, String surname) {
-        loginPage.login(login, password);
-        MainPage mainPage = new MainPage();
-        mainPage.checkProfileName(name, surname);
+    @MethodSource("validUsers")
+    public void loginWithValidCredentials(AccountDetails user) {
+        loginPage.login(user.getLogin(), user.getPassword());
+        new MainPage().checkProfileName(user.getName(), user.getSurname());
     }
 
     @ParameterizedTest
     @Tag("smoke")
     @DisplayName("Вход с неверными данными")
-    @CsvSource({
-            "technopol76, techno",
-            "polis, technopolisPassword"
-    })
-    public void loginWithInvalidCredentials(String login, String password) {
-        loginPage.login(login, password);
-        loginPage.errorFormvisible();
+    @MethodSource("invalidUsers")
+    public void loginWithInvalidCredentials(AccountDetails user) {
+        loginPage
+                .login(user.getLogin(), user.getPassword())
+                .errorFormvisible();
     }
 
     @AfterEach
